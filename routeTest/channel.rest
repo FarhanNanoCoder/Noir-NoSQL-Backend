@@ -1,0 +1,30 @@
+GET http://localhost:3000/channels?count=10&page=1&name=ashish
+
+
+###
+
+GET http://localhost:3000/channels/64031f1fb167c02fc39d3f98
+
+###
+
+POST http://localhost:3000/channels
+Content-Type: application/json
+
+{
+    "name": "Ashish Chancalani",
+    "type":"vines"
+}
+
+###
+
+DELETE http://localhost:3000/channels/64031f1fb167c02fc39d3f98
+
+###
+
+PATCH http://localhost:3000/channels/64031f1fb167c02fc39d3f98
+Content-Type: application/json
+
+{
+    "name": "Ashish Chancalani",
+    "type":"math"
+}
