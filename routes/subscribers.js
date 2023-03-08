@@ -7,18 +7,6 @@ const Subscriber = require("../models/subscriber");
 
 // Getting list
 router.get("/", getListSubscriber, (req, res) => {
-  // console.log("res", res.results);
-  // console.log("query: " + JSON.stringify(req.query));
-  // try {
-  //   const subscribers = await Subscriber.find();
-  //   res.json({
-  //     data: subscribers,
-  //     message: "Get all subscribers successfully",
-  //     code: 200,
-  //   });
-  // } catch (err) {
-  //   res.status(500).json({ message: err.message });
-  // }
 });
 
 // Getting One

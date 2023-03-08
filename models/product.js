@@ -1,14 +1,19 @@
 const mongoose = require("mongoose");
 
-const channelSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
+  price:{
+    type:Number,
+    reuired:true,
+  },
   type: {
     type: String,
     required: true,
-    default: "entertainment",
+    default: "accessories",
+    uppercase: true,
   },
   createdAt: {
     type: Date,
@@ -16,4 +21,4 @@ const channelSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Channel", channelSchema);
+module.exports = mongoose.model("Product", productSchema);

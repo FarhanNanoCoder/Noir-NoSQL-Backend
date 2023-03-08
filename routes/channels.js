@@ -3,7 +3,7 @@ const baseCount = 20;
 
 const router = express.Router();
 
-const Channel = require("../models/channel");
+const Channel = require("../models/product");
 
 // Getting list
 router.get("/", getListChannel, (req, res) => {
