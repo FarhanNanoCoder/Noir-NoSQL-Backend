@@ -22,10 +22,9 @@ DELETE http://localhost:3000/user/640858b9aafbe02576c1830a
 
 ###
 
-PATCH http://localhost:3000/user/64031f1fb167c02fc39d3f98
+PATCH http://localhost:3000/user/640df1fd29136b68467a446a
 Content-Type: application/json
 
 {
-    "name": "Ashish Chancalani",
-    "type":"math"
+    "name": "Farhan 0"
 }
