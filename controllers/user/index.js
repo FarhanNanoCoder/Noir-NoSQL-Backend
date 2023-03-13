@@ -3,5 +3,6 @@ module.exports={
     delUserController:require("./delUserController"),
     getUserController:require("./getUserController"),
     updateUserController:require("./updateUserController"),
+    listUserController:require("./listUserController"),
    
 }

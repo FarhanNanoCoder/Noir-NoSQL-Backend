@@ -15,7 +15,7 @@ module.exports = {
     try {
       let user = await User.findById(_id);
       if (user) {
-        const updated = await User.updateOne({ _id: _id }, body, {
+        await User.updateOne({ _id: _id }, body, {
           new: true,
           runValidators: true,
         });
@@ -30,6 +30,107 @@ module.exports = {
       console.log(error.message);
       throw error;
       // return null;
+    }
+  },
+  listUser: async (params) => {
+    try {
+      let filter = {
+        $match: {},
+      };
+      let orArray = [];
+
+      //direct matchers
+      if (params?.role){
+        filter.$match["role"] = parseInt(params?.role);
+      }
+      if (params?.createdAt) {
+        filter.$match["createdAt"] = parseInt(params?.createdAt);
+      }
+
+      //or matchers
+      ["name", "email", "phone"].forEach((key) => {
+        if (params[key]) {
+          orArray.push({
+            [key]: {
+              $regex: params[key],
+              $options: "i",
+            },
+          });
+        }
+      });
+
+      if (orArray.length !== 0) {
+        filter.$match["$or"] = orArray;
+      }
+
+      const sortOrder =
+        params?.sort_order && params?.sort_order === "asc" ? 1 : -1;
+      const sortBy = params?.sort_by || "createdAt";
+      const total = await User.countDocuments(filter.$match);
+
+      let aggregate = [
+        filter,
+        {
+          $sort: {
+            [sortBy]: sortOrder,
+            _id: -1,
+          },
+        },
+        { $skip: params?.offset },
+        { $limit: params?.limit },
+        {
+          $project: {
+            password: 0,
+            __v: 0,
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            results: { $push: "$$ROOT" },
+          },
+        },
+        {
+          $addFields: { total },
+        },
+        {
+          $project: {
+            _id: 0,
+            meta: {
+              previous: { $cond: [params?.currentPage === 1, null, params?.currentPage - 1] },
+              next: {
+                $cond: {
+                  if: { $lte: ["$total", params?.offset + params?.limit] },
+                  then: null,
+                  else: params?.currentPage + 1,
+                },
+              },
+              total: "$total",
+              page_size: { $size: "$results" },
+              last_page: { $ceil: { $divide: ["$total", params?.limit] } },
+            },
+            results: 1,
+          },
+        },
+      ];
+
+      let docs = await User.aggregate(aggregate);
+      if (docs.length === 0) {
+        throw Error("No users found");
+      }
+      return docs[0];
+    } catch (error) {
+      console.log(error.message);
+      return {
+        meta: {
+          previous: null,
+          next: null,
+          total: 0,
+          page_size: 1,
+          last_page: 1,
+        },
+        results: [],
+      };
     }
   },
   delUser: async (_id) => {
