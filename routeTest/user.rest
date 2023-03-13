@@ -1,9 +1,9 @@
-GET http://localhost:3000/channels?count=10&page=1&name=ashish
+GET http://localhost:3000/user?count=10&page=1&name=ashish
 
 
 ###
 
-GET http://localhost:3000/channels/64031f1fb167c02fc39d3f98
+GET http://localhost:3000/user/64031f1fb167c02fc39d3f98
 
 ###
 
@@ -11,18 +11,18 @@ POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-    "name":"Farhan",
-    "role":2,
-    "phone":"01946918851"
+    "name":"Uday",
+    "role":0,
+    "phone":"01946918856"
 }
 
 ###
 
-DELETE http://localhost:3000/channels/64031f1fb167c02fc39d3f98
+DELETE http://localhost:3000/user/640858b9aafbe02576c1830a
 
 ###
 
-PATCH http://localhost:3000/channels/64031f1fb167c02fc39d3f98
+PATCH http://localhost:3000/user/64031f1fb167c02fc39d3f98
 Content-Type: application/json
 
 {

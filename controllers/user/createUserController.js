@@ -25,7 +25,7 @@ module.exports = createUserController = async (req, res, next) => {
     
     return res.status(201).json({
       code: 201,
-      status: "created",
+      status: "success",
       message: "User created successfully",
       data: user,
     });
