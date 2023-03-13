@@ -7,8 +7,9 @@ module.exports = listUserController = async (req, res, next) => {
     let page = req?.query.page ? parseInt(req?.query.page) : 1;
     let count = req?.query.count ? parseInt(req?.query.count) : 20;
     let offset = (page - 1) * count;
-    const validParams = ["address", "role", "name", "count", "page","phone"];
+    const validParams = ["address", "role", "name", "count", "page","phone","sort_order","sort_by"];
 
+    
     params.forEach((param) => {
       if (!validParams.includes(param)) {
         throw Error(`Invalid query param: ${param}`);

@@ -4,5 +4,4 @@ module.exports={
     getUserController:require("./getUserController"),
     updateUserController:require("./updateUserController"),
     listUserController:require("./listUserController"),
-   
 }
