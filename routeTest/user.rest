@@ -9,9 +9,10 @@ GET http://localhost:3000/user/640df1fd29136b68467a446a
 
 POST http://localhost:3000/user
 Content-Type: application/json
+
 {
-    "name":"Uday",
-    "role":0,
+    "name":"Mishu Baidya",
+    "role":1,
     "phone":"01946918856"
 }
 

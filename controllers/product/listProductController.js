@@ -1,21 +1,21 @@
 // const { baseCount } = require("../../globals/constants");
-const { listUser } = require("../../helpers/user");
+const { listProduct } = require("../../helpers/product");
 
-module.exports = listUserController = async (req, res, next) => {
+module.exports = listProductController = async (req, res, next) => {
   try {
     let params = Object.keys(req.query);
     let page = req?.query.page ? parseInt(req?.query.page) : 1;
     let count = req?.query.count ? parseInt(req?.query.count) : 20;
     let offset = (page - 1) * count;
     const validParams = [
-      "address",
+      "price_from",
+      "price_to",
       "date_from",
       "date_to",
-      "role",
       "name",
       "count",
       "page",
-      "phone",
+      "note",
       "sort_order",
       "sort_by",
     ];
@@ -26,7 +26,7 @@ module.exports = listUserController = async (req, res, next) => {
       }
     });
 
-    const data = await listUser({
+    const data = await listProduct({
       offset,
       limit: count,
       currentPage: page,
@@ -36,7 +36,7 @@ module.exports = listUserController = async (req, res, next) => {
     return res.status(200).json({
       code: 200,
       status: "success",
-      message: "Retrieved users successfully",
+      message: "Retrieved products successfully",
       data,
     });
   } catch (err) {

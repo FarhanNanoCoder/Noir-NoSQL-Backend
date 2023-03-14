@@ -1,0 +1,30 @@
+GET http://localhost:3000/product?count=10&page=1&sort_order=asc&sort_by=name&price_from=789.23&price_to=2000
+
+
+###
+
+GET http://localhost:3000/product/640df1fd29136b68467a446a
+
+###
+
+POST http://localhost:3000/product
+Content-Type: application/json
+
+{
+    "name":"Apple Buds",
+    "note":"expensive",
+    "price": 2000.40
+}
+
+###
+
+DELETE http://localhost:3000/product/64108d429adc9405ee175c5e
+
+###
+
+PATCH http://localhost:3000/product/64108dc19adc9405ee175c70
+Content-Type: application/json
+
+{
+    "price": 789.23
+}

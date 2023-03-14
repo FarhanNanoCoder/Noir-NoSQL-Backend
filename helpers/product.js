@@ -1,31 +1,31 @@
-const User = require("../models/user");
-const { generateDateQuery } = require("./utils");
+const Product = require("../models/product");
+const { generateDateQuery, generateRangeQuery } = require("./utils");
 
 module.exports = {
-  createUser: async (body) => {
+  createProduct: async (body) => {
     try {
-      const user = new User(body).save();
-      return user;
+      const product = new Product(body).save();
+      return product;
     } catch (error) {
       console.log(error.message);
       //   throw error;
       return null;
     }
   },
-  updateUser: async ({ _id }, body) => {
+  updateProduct: async ({ _id }, body) => {
     try {
-      let user = await User.findById(_id);
-      if (user) {
-        await User.updateOne({ _id: _id }, body, {
+      let product = await Product.findById(_id);
+      if (product) {
+        await Product.updateOne({ _id: _id }, body, {
           new: true,
           runValidators: true,
         });
         return {
-          ...user?._doc,
+          ...product?._doc,
           ...body,
         };
       } else {
-        throw Error("User not found");
+        throw Error("Product not found");
       }
     } catch (error) {
       console.log(error.message);
@@ -33,7 +33,7 @@ module.exports = {
       // return null;
     }
   },
-  listUser: async (params) => {
+  listProduct: async (params) => {
     try {
       let filter = {
         $match: {},
@@ -41,8 +41,14 @@ module.exports = {
       let orArray = [];
 
       //direct matchers
-      if (params?.role) {
-        filter.$match["role"] = parseInt(params?.role);
+      if (params?.price) {
+        filter.$match["price"] = parseFloat(params?.price);
+      }
+      if (params?.price_from || params?.price_to) {
+        filter.$match["price"] = generateRangeQuery(
+          parseFloat(params?.price_from),
+          parseFloat(params?.price_to)
+        );
       }
       if (params?.date_from || params?.date_to) {
         filter.$match["createdAt"] = generateDateQuery(
@@ -52,7 +58,7 @@ module.exports = {
       }
 
       //or matchers
-      ["name", "email", "phone"].forEach((key) => {
+      ["name", "type", "note"].forEach((key) => {
         if (params[key]) {
           orArray.push({
             [key]: {
@@ -70,7 +76,7 @@ module.exports = {
       const sortOrder =
         params?.sort_order && params?.sort_order === "asc" ? 1 : -1;
       const sortBy = params?.sort_by || "createdAt";
-      const total = await User.countDocuments(filter.$match);
+      const total = await Product.countDocuments(filter.$match);
 
       let aggregate = [
         filter,
@@ -124,9 +130,9 @@ module.exports = {
         },
       ];
 
-      let docs = await User.aggregate(aggregate);
+      let docs = await Product.aggregate(aggregate);
       if (docs.length === 0) {
-        throw Error("No users found");
+        throw Error("No products found");
       }
       return docs[0];
     } catch (error) {
@@ -143,14 +149,14 @@ module.exports = {
       };
     }
   },
-  delUser: async (_id) => {
+  delProduct: async (_id) => {
     try {
-      let user = await User.findById(_id);
-      if (user) {
-        await user.deleteOne();
+      let product = await Product.findById(_id);
+      if (product) {
+        await product.deleteOne();
         return true;
       } else {
-        throw Error("User not found");
+        throw Error("Product not found");
       }
     } catch (error) {
       console.log(error.message);
@@ -158,14 +164,14 @@ module.exports = {
       // return null;
     }
   },
-  getUser: async (_id) => {
+  getProduct: async (_id) => {
     try {
       console.log("deleting ", _id);
-      let user = await User.findById(_id);
-      if (user) {
-        return user;
+      let product = await Product.findById(_id);
+      if (product) {
+        return product;
       } else {
-        throw Error("User not found");
+        throw Error("Product not found");
       }
     } catch (error) {
       console.log(error.message);

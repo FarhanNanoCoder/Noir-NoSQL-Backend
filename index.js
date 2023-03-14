@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 // const subscribersRouter = require("./routes/subscribers");
 // const channelsRouter = require("./routes/channels");
-const { userRouter } = require("./routes");
+const { userRouter,productRouter } = require("./routes");
 // const userRouter  = require("./routes/user");
 
 mongoose.connect(process.env.DATABASE_URL, {
@@ -21,6 +21,7 @@ app.use(express.json());
 // app.use("/subscribers", subscribersRouter);
 // app.use("/channels", channelsRouter);
 app.use("/user", userRouter);
+app.use("/product", productRouter);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
