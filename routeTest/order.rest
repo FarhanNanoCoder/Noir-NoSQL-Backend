@@ -1,0 +1,32 @@
+GET http://localhost:3000/order?count=10&page=1&sort_order=asc&sort_by=role
+
+
+###
+
+GET http://localhost:3000/order/640df1fd29136b68467a446a
+
+###
+
+POST http://localhost:3000/order
+Content-Type: application/json
+
+{
+    "customer":"640df1fd29136b68467a446a",
+    "product":"64108dc19adc9405ee175c71",
+    "quantity": 2,
+    "amount": 1000,
+    "note":"note"
+}
+
+###
+
+DELETE http://localhost:3000/order/64120c280cf48182aa7ee65f
+
+###
+
+PATCH http://localhost:3000/order/64120c210cf48182aa7ee65d
+Content-Type: application/json
+
+{
+    "customer": "641085c94e1e897b64825d60"
+}
