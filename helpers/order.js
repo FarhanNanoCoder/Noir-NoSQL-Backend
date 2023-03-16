@@ -101,6 +101,24 @@ module.exports = {
       const sortBy = params?.sort_by || "createdAt";
       const total = await Order.countDocuments(filter.$match);
 
+      let projection = {
+        quantity:1,
+        amount:1,
+        note:1,
+        status:1,
+        createdAt:1,
+        customer: {
+          name: 1,
+          email: 1,
+          phone: 1,
+        },
+        product: {
+          name: 1,
+          price: 1,
+          quantity: 1,
+        },
+      };
+
       let aggregate = [
         filter,
         {
@@ -112,11 +130,42 @@ module.exports = {
         { $skip: params?.offset },
         { $limit: params?.limit },
         {
-          $project: {
-            password: 0,
-            __v: 0,
+          $lookup: {
+            from: "users",
+            localField: "customer",
+            foreignField: "_id",
+            as: "customer",
           },
         },
+        {
+          $unwind: {
+            path: "$customer",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "product",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        {
+          $unwind: {
+            path: "$product",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: projection,
+        },
+        // {
+        //   $project: {
+        //     password: 0,
+        //     __v: 0,
+        //   },
+        // },
         {
           $group: {
             _id: null,

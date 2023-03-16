@@ -1,4 +1,4 @@
-GET http://localhost:3000/order?count=10&page=1&sort_order=asc&sort_by=role
+GET http://localhost:3000/order?count=10&page=1
 
 
 ###
