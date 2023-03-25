@@ -2,7 +2,7 @@ const { updateUser } = require("../../helpers/user");
 
 module.exports = updateUserController = async (req, res, next) => {
   let keys = Object.keys(req.body);
-  let validKeys = ["address", "role", "name"];
+  let validKeys = ["address", "role", "name","avatar"];
 
   try {
     if (keys.length === 0) {

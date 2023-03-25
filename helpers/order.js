@@ -6,8 +6,8 @@ const { generateDateQuery, generateRangeQuery } = require("./utils");
 module.exports = {
   createOrder: async (body) => {
     try {
-      const customer = await User.findById(body?.customer);
-      if (!customer) throw Error("Customer not found");
+`      const customer = await User.findById(body?.customer);
+      if (!customer) throw Error("Customer not found");`
 
       const product = await Product.findById(body?.product);
       if (!product) throw Error("Product not found");

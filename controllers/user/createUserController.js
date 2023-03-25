@@ -3,7 +3,7 @@ const { createUser } = require("../../helpers/user");
 module.exports = createUserController = async (req, res, next) => {
   let keys = Object.keys(req.body);
   let mustKeys = ["name", "role", "phone"];
-  let validKeys = ["email", "address"];
+  let validKeys = ["email", "address","avatar"];
 
   try {
     if (keys.length === 0) {
