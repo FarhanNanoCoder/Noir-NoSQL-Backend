@@ -3,7 +3,7 @@ const { createUser } = require("../../helpers/user");
 module.exports = createUserController = async (req, res, next) => {
   let keys = Object.keys(req.body);
   let mustKeys = ["name", "role", "phone"];
-  let validKeys = ["email", "address","avatar"];
+  let validKeys = ["email", "address", "avatar"];
 
   try {
     if (keys.length === 0) {
@@ -22,14 +22,13 @@ module.exports = createUserController = async (req, res, next) => {
 
     const user = await createUser(req.body);
     if (!user) throw Error("Error creating user");
-    
+
     return res.status(201).json({
       code: 201,
       status: "success",
       message: "User created successfully",
       data: user,
     });
-
   } catch (err) {
     return res.status(400).json({
       code: 400,

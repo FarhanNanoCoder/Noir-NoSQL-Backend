@@ -1,7 +1,7 @@
-module.exports={
-    createUserController:require("./createUserController"),
-    delUserController:require("./delUserController"),
-    getUserController:require("./getUserController"),
-    updateUserController:require("./updateUserController"),
-    listUserController:require("./listUserController"),
-}
+module.exports = {
+  createUserController: require("./createUserController"),
+  delUserController: require("./delUserController"),
+  getUserController: require("./getUserController"),
+  updateUserController: require("./updateUserController"),
+  listUserController: require("./listUserController"),
+};
